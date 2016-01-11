@@ -53,7 +53,7 @@ constructor() {
 
 
     // save the login token in the browser
-    //localStorage.setItem('token', authData.token);
+    localStorage.setItem('token', authData.token);
 
     const gameRef = ref;
 
@@ -88,6 +88,7 @@ constructor() {
 
 	renderPlayer(key) {
 		var linkState = this.props.linkState;
+		var removeButton = <button onClick={this.props.removePlayer.bind(null,key)}>&times;</button>
 
 		return (
 			<div>
@@ -97,12 +98,15 @@ constructor() {
        				<input type="text" valueLink={linkState('player.'+ key +'.nickname')}/>
        				<input type="text" valueLink={linkState('player.'+ key +'.points')}/>
 				    <input type="text" valueLink={linkState('player.'+ key +'.image')}/>
+				    {removeButton}
+
 				</div>
 			</div>
 		)
 	}
 
 	render() {
+
 		 // first check if they arent logged in
 	    if(!this.state.uid) {
 	      return (

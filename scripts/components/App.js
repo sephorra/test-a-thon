@@ -38,6 +38,15 @@ class App extends React.Component {
 		this.setState({ player : this.state.player });
 	}
 
+	removePlayer(key){
+    	if(confirm("Are you sure you want to remove this player?!")) {
+      		this.state.player[key] = null;
+		      this.setState({
+		        player : this.state.player
+		    });
+   		}
+  	}
+
 	renderPlayers(key){
 		return <Players key={key} index={key} details={this.state.player[key]} />
   	}
@@ -46,7 +55,7 @@ class App extends React.Component {
 
 		return (
 			<div>
-				<Leaderboard addPlayer={this.addPlayer} player={this.state.player} linkState={this.linkState.bind(this)}/>
+				<Leaderboard addPlayer={this.addPlayer} removePlayer={this.removePlayer} player={this.state.player} linkState={this.linkState.bind(this)}/>
 
 				<ul className="list-of-players">
 					{Object.keys(this.state.player).map(this.renderPlayers)}
