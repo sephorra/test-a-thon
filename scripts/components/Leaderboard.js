@@ -16,67 +16,74 @@ const ref = new Firebase('https://test-a-thon.firebaseio.com/');
 
 @autoBind
 class Leaderboard extends React.Component {
+constructor() {
+    super();
 
-	constructor() {
-		super();
-
-		this.state = {
-		  uid : ''
-		}
-	}
-
-	authenticate(provider) {
-		console.log("Trying to auth with" + provider);
-		ref.authWithOAuthPopup(provider, this.authHandler);
-	}
-
-	componentWillMount() {
-	console.log("Checking to see if we can log them in");
-		var token = localStorage.getItem('token');
-		if(token) {
-		  ref.authWithCustomToken(token,this.authHandler);
-		}
-	}
-
-
-	logout() {
-	ref.unauth();
-		localStorage.removeItem('token');
-		this.setState({
-		uid : null
-		});
-	}
-
-	authHandler(err, authData) {
-		if(err) {
-		console.error(err);
-		return;
-	}
-
-	// save the login token in the browser
-    localStorage.setItem('token',authData.token);
-
-
-      var data = 'mandy';
-
-      // update our state to reflect the current store owner and user
-      this.setState({
-        uid : authData.uid,
-        owner : data.owner || authData.uid
-      });
-
-
+    this.state = {
+      uid : ''
+    }
   }
+
+  authenticate(provider) {
+    console.log("Trying to auth with " + provider);
+    ref.authWithOAuthPopup(provider, this.authHandler);
+  }
+
+  componentWillMount() {
+    console.log("Checking to see if we can log them in");
+    var token = localStorage.getItem('token');
+    if(token) {
+      ref.authWithCustomToken(token,this.authHandler);
+    }
+  }
+
+  logout() {
+    ref.unauth();
+    localStorage.removeItem('token');
+    this.setState({
+      uid : null
+    });
+  }
+
+  authHandler(err, authData) {
+	if(err) {
+	  console.error(err);
+	  return;
+	}
+
+
+    // save the login token in the browser
+    //localStorage.setItem('token', authData.token);
+
+    const gameRef = ref;
+
+    console.log(gameRef);
+    ref.on("value", (snapshot) => {
+    	var data = snapshot.val() || {};
+
+    	if(!data.owner) {
+	    	ref.set({
+	    		owner: authData.uid
+	   	 	});
+   	 	}
+
+   	 	this.setState({
+   	 		uid: authData.uid,
+   	 		owner: data.owner || authData.uid
+   	 	});
+    });
+  }
+
 
     renderLogin() {
-    return (
-      <nav className="login">
-        <h2>Inventory</h2>
-        <p>Sign in to manage player scores</p>
-        <button className="github" onClick={this.authenticate.bind(this, 'github')}>Log In with Github</button>
-      </nav>
-    )
-  }
+	    return (
+	      <nav className="login">
+	        <h2>Inventory</h2>
+	        <p>Sign in to manage player scores</p>
+	        <button className="github" onClick={this.authenticate.bind(this, 'github')}>Log In with Github</button>
+	      </nav>
+	    )
+  	}
 
 
 	renderPlayer(key) {
@@ -85,7 +92,9 @@ class Leaderboard extends React.Component {
 		return (
 			<div>
 				<div className="player-edit" key={key}>
-					<input type="text" valueLink={linkState('player.'+ key +'.name')}/>
+					<input type="text" valueLink={linkState('player.'+ key +'.firstname')}/>
+					<input type="text" valueLink={linkState('player.'+ key +'.lastname')}/>
+       				<input type="text" valueLink={linkState('player.'+ key +'.nickname')}/>
        				<input type="text" valueLink={linkState('player.'+ key +'.points')}/>
 				    <input type="text" valueLink={linkState('player.'+ key +'.image')}/>
 				</div>
@@ -100,6 +109,7 @@ class Leaderboard extends React.Component {
 	        <div>{this.renderLogin()}</div>
 	      )
 	    }
+
 		return (
 			<div>
 				<h1>The Test-a-Thon</h1>

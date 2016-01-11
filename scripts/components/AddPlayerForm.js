@@ -12,7 +12,8 @@ class AddPlayerForm extends React.Component {
 		event.preventDefault();
 		//2. Take the data from the form and create an object
 		var player = {
-			name : this.refs.name.value,
+			lastname : this.refs.lastname.value,
+			firstname : this.refs.firstname.value,
 			points : this.refs.points.value,
 			image : this.refs.image.value,
 			nickname : this.refs.nickname.value
@@ -20,13 +21,14 @@ class AddPlayerForm extends React.Component {
 
 		// //3. Add the player to the app state
 		this.props.addPlayer(player);
-		//this.refs.playerForm.reset();
+		this.refs.playerForm.reset();
 	}
 
 	render() {
 		return (
 			<form className="edit-player" ref="playerForm" onSubmit={this.createPlayer}>
-				<input type="text" ref="name" placeholder="Player Name"/>
+				<input type="text" ref="firstname" placeholder="Player First Name"/>
+				<input type="text" ref="lastname" placeholder="Player Last Name"/>
 				<input type="text" ref="nickname" placeholder="Player nickname" />
 				<input type="text" ref="points" placeholder="Player points" />
 				<input type="text" ref="image" placeholder="URL to Image" />

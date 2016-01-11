@@ -13,7 +13,8 @@ class Players extends React.Component {
 		var details = this.props.details;
 		return (
 			<li>
-				<h3>{details.name}</h3>
+				<h3>{details.firstname}{details.nickname}{details.lastname}</h3>
+
 				<p>{details.points}</p>
 				<img src={details.image} alt=""/>
 			</li>
