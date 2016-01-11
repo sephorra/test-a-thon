@@ -78,7 +78,7 @@ constructor() {
     renderLogin() {
 	    return (
 	      <nav className="login">
-	        <h2>Inventory</h2>
+	        <h2>Update Players</h2>
 	        <p>Sign in to manage player scores</p>
 	        <button className="github" onClick={this.authenticate.bind(this, 'github')}>Log In with Github</button>
 	      </nav>
@@ -116,14 +116,11 @@ constructor() {
 
 		return (
 			<div>
-				<h1>The Test-a-Thon</h1>
-
 				<h2>Manage Players</h2>
 				{Object.keys(this.props.player).map(this.renderPlayer)}
 
 				<h2>Add a new player</h2>
 				<AddPlayerForm {...this.props}/>
-
 			</div>
 		)
 	}

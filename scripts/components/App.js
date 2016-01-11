@@ -55,11 +55,15 @@ class App extends React.Component {
 
 		return (
 			<div>
-				<Leaderboard addPlayer={this.addPlayer} removePlayer={this.removePlayer} player={this.state.player} linkState={this.linkState.bind(this)}/>
+				<h1>Test-a-Thon</h1>
 
 				<ul className="list-of-players">
 					{Object.keys(this.state.player).map(this.renderPlayers)}
 				</ul>
+
+
+				<Leaderboard addPlayer={this.addPlayer} removePlayer={this.removePlayer} player={this.state.player} linkState={this.linkState.bind(this)}/>
+
 			</div>
 		)
 	}
