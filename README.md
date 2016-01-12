@@ -8,3 +8,9 @@ Features
 * Add/Remove Players
 * Update existing player data
 * Output player list
+
+
+To Dos
+* Order players from highest to lowest
+* finish styling
+* Add a logout button
