@@ -10,7 +10,7 @@ import App from './components/App';
 
 var routes = (
 	<Router history={createHistory()}>
-		<Route path="/test-a-thon" component={App}/>
+		<Route path="/test-a-thon/" component={App}/>
 		<Route path="*" component={NotFound}/>
 	</Router>
 )
